@@ -21,6 +21,8 @@ import os
 import sys
 import tarfile
 
+from shutil import copy
+
 from six.moves import urllib
 import tensorflow as tf
 
@@ -83,6 +85,18 @@ def download_and_uncompress_tarball(tarball_url, dataset_dir):
   print('Successfully downloaded', filename, statinfo.st_size, 'bytes.')
   tarfile.open(filepath, 'r:gz').extractall(dataset_dir)
 
+
+def copy_and_uncompress_tarball(tarball_url, dataset_dir):
+  """Downloads the `tarball_url` and uncompresses it locally.
+
+  Args:
+    tarball_url: The URL of a tarball file.
+    dataset_dir: The directory where the temporary files are stored.
+  """
+  filename = tarball_url.split('/')[-1]
+  filepath = os.path.join(dataset_dir, filename)
+  copy(tarball_url, dataset_dir)
+  tarfile.open(filepath, 'r:gz').extractall(dataset_dir)
 
 def write_label_file(labels_to_class_names, dataset_dir,
                      filename=LABELS_FILENAME):

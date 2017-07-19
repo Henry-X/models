@@ -28,6 +28,10 @@ $ python download_and_convert_data.py \
 $ python download_and_convert_data.py \
     --dataset_name=flowers \
     --dataset_dir=/tmp/flowers
+
+$ python download_and_convert_data.py \
+    --dataset_name=flowers102 \
+    --dataset_dir=/tmp/flowers102
 ```
 """
 from __future__ import absolute_import
@@ -38,6 +42,7 @@ import tensorflow as tf
 
 from datasets import download_and_convert_cifar10
 from datasets import download_and_convert_flowers
+from datasets import download_and_convert_flowers102
 from datasets import download_and_convert_mnist
 
 FLAGS = tf.app.flags.FLAGS
@@ -45,7 +50,7 @@ FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string(
     'dataset_name',
     None,
-    'The name of the dataset to convert, one of "cifar10", "flowers", "mnist".')
+    'The name of the dataset to convert, one of "cifar10", "flowers", "flowers102", "mnist".')
 
 tf.app.flags.DEFINE_string(
     'dataset_dir',
@@ -63,6 +68,8 @@ def main(_):
     download_and_convert_cifar10.run(FLAGS.dataset_dir)
   elif FLAGS.dataset_name == 'flowers':
     download_and_convert_flowers.run(FLAGS.dataset_dir)
+  elif FLAGS.dataset_name == 'flowers102':
+    download_and_convert_flowers102.run(FLAGS.dataset_dir)
   elif FLAGS.dataset_name == 'mnist':
     download_and_convert_mnist.run(FLAGS.dataset_dir)
   else:
